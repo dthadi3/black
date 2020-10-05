@@ -5,6 +5,11 @@ cache:
     - $HOME/.cache/pre-commit
 env:
   - TEST_CMD="coverage run -m unittest"
+before_install:
+  - | 
+   if [[ "$TRAVIS_CPU_ARCH" == "ppc64le" ]]; then
+     sudo chown -Rv $USER:$GROUP ~/.cache/pip/wheels
+   fi
 install:
   - pip install coverage coveralls pre-commit
   - pip install -e '.[d]'
@@ -50,11 +55,7 @@ matrix:
   allow_failures:
     - python: 3.9-dev
 before_deploy:
-  - | 
-   if [[ "$TRAVIS_CPU_ARCH" == "ppc64le" ]]; then
-     sudo chown -Rv $USER:$GROUP ~/.cache/pip/wheels
-   fi
-  - pip install pyinstaller
+    - pip install pyinstaller
   - pyinstaller --clean -F --add-data src/blib2to3/:blib2to3 src/black/__init__.py
 deploy:
   provider: releases
