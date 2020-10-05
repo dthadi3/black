@@ -29,6 +29,24 @@ matrix:
       python: 3.8
     - name: "3.9"
       python: 3.9-dev
+#Power_jobs
+    - name: "lint"
+      python: 3.7
+      env:
+        - TEST_CMD="pre-commit run --all-files --show-diff-on-failure"
+      arch: ppc64le  
+    - name: "3.6"
+      python: 3.6
+      arch: ppc64le
+    - name: "3.7"
+      python: 3.7
+      arch: ppc64le
+    - name: "3.8"
+      python: 3.8
+      arch: ppc64le
+    - name: "3.9"
+      python: 3.9-dev
+      arch: ppc64le
   allow_failures:
     - python: 3.9-dev
 before_deploy:
